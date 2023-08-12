@@ -26,6 +26,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-validation:2.7.14")
 	implementation("org.modelmapper:modelmapper:3.1.1")
+	implementation("br.com.six2six:fixture-factory:3.1.0")
 
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("com.h2database:h2")
