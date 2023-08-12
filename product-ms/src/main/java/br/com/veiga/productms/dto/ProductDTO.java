@@ -9,6 +9,8 @@ import javax.validation.constraints.Size;
 @Data
 public class ProductDTO {
 
+    private Long id;
+
     @NotBlank
     private String name;
 

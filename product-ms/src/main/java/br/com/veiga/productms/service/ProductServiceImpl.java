@@ -20,10 +20,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Optional<ProductDTO> create(ProductDTO request) {
-        Product product = mapper.map(request, Product.class);
+        request.setAvailable(true);
 
-        product.setAvailable(true);
-        product = repository.save(product);
+        Product product = repository.save(mapper.map(request, Product.class));
 
         ProductDTO response = mapper.map(product, ProductDTO.class);
 
@@ -50,6 +49,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> product = repository.findById(id);
 
         if (product.isPresent()) {
+            product.get().setName(request.getName());
             product.get().setDescription(request.getDescription());
             product.get().setPrice(request.getPrice());
             repository.save(product.get());
