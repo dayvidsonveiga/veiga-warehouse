@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
+import javax.validation.constraints.Positive;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,4 +68,22 @@ class ProductServiceTest {
         assertTrue(responseById.get().isAvailable());
     }
 
+    @Test
+    public void shouldUpdateProduct() {
+        ProductDTO request = Fixture.from(ProductDTO.class).gimme("valid");
+        Optional<ProductDTO> response = service.create(request);
+        Long id = response.get().getId();
+
+        String newDescription = "Esse com certeza é o melhor aparelho de telefone móvel já criado na história";
+        request.setDescription(newDescription);
+
+        double newPrice = 789.32;
+        request.setPrice(newPrice);
+
+        Optional<ProductDTO> updatedProductDTO = service.update(id, request);
+
+        assertNotNull(updatedProductDTO);
+        assertEquals(newDescription, updatedProductDTO.get().getDescription());
+        assertEquals(newPrice, updatedProductDTO.get().getPrice());
+    }
 }
