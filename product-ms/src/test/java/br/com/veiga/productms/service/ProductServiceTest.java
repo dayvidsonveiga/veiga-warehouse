@@ -51,4 +51,20 @@ class ProductServiceTest {
         assertEquals(responses.get(0).getPrice(), productDTO.get().getPrice());
     }
 
+    @Test
+    public void shouldGetById() {
+        ProductDTO request = Fixture.from(ProductDTO.class).gimme("valid");
+        Optional<ProductDTO> response = service.create(request);
+
+        Long id = response.get().getId();
+
+        Optional<ProductDTO> responseById = service.getById(id);
+
+        assertNotNull(response);
+        assertEquals(request.getName(), responseById.get().getName());
+        assertEquals(request.getDescription(), responseById.get().getDescription());
+        assertEquals(request.getPrice(), responseById.get().getPrice());
+        assertTrue(responseById.get().isAvailable());
+    }
+
 }
