@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -53,6 +54,13 @@ public class ProductControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(content))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldGetAllProduct() throws Exception {
+        mvc.perform(get("/products")
+                        .header(AUTHORIZATION, "Bearer foo"))
+                .andExpect(status().isOk());
     }
 
 }
