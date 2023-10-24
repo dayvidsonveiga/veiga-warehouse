@@ -43,4 +43,16 @@ public class ProductControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    @Test
+    public void shouldNotCreateProduct() throws Exception {
+        ProductDTO request = new ProductDTO();
+        String content = mapper.writeValueAsString(request);
+
+        mvc.perform(post("/products")
+                        .header(AUTHORIZATION, "Bearer foo")
+                        .contentType(APPLICATION_JSON)
+                        .content(content))
+                .andExpect(status().isBadRequest());
+    }
+
 }
