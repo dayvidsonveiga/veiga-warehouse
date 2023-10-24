@@ -3,6 +3,7 @@ package br.com.veiga.productms.controller;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 import br.com.veiga.productms.dto.ProductDTO;
+import br.com.veiga.productms.repository.ProductRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,9 @@ public class ProductControllerTest {
 
     @Autowired
     private ObjectMapper mapper;
+
+    @Autowired
+    private ProductRepository repository;
 
     @BeforeAll
     public static void setUp() {
@@ -61,6 +65,15 @@ public class ProductControllerTest {
         mvc.perform(get("/products")
                         .header(AUTHORIZATION, "Bearer foo"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void shouldGetById() throws Exception {
+        Long id = repository.findAll().get(0).getId();
+
+        mvc.perform(get( "/products/{id}", id)
+                .header(AUTHORIZATION, "Bearer foo"))
+        .andExpect(status().isOk());
     }
 
 }
